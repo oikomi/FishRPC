@@ -1,5 +1,9 @@
 package org.miaohong.fishrpc.register.discovery;
 
+
+import lombok.Data;
+
+@Data
 public class ServiceInstance<T> {
 
     private final String name;
