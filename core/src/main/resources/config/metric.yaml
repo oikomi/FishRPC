@@ -1,0 +1,6 @@
+sources:
+  - org.miaohong.fishrpc.core.metrics.source.JvmSource
+
+
+sinks:
+  - org.miaohong.fishrpc.core.metrics.sink.ConsoleSink

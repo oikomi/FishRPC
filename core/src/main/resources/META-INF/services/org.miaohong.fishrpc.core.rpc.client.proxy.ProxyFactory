@@ -1,0 +1,3 @@
+
+org.miaohong.fishrpc.core.rpc.client.proxy.jdk.JdkProxyFactory
+org.miaohong.fishrpc.core.rpc.client.proxy.bytebuddy.BytebuddyProxyFactory
