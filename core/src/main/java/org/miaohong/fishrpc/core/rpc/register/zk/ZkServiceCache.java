@@ -6,8 +6,8 @@ import org.apache.curator.framework.listen.StandardListenerManager;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.PathChildrenCacheEvent;
 import org.apache.curator.framework.recipes.cache.PathChildrenCacheListener;
-import org.miaohong.fishrpc.core.rpc.register.serializer.JsonInstanceSerializer;
 import org.miaohong.fishrpc.core.rpc.register.listener.ServiceCacheListener;
+import org.miaohong.fishrpc.core.rpc.register.serializer.JsonInstanceSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

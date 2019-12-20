@@ -5,10 +5,10 @@ import lombok.Getter;
 import org.miaohong.fishrpc.core.rpc.eventbus.EventBus;
 import org.miaohong.fishrpc.core.rpc.eventbus.EventBusManager;
 import org.miaohong.fishrpc.core.rpc.network.NetworkConfig;
-import org.miaohong.fishrpc.core.rpc.register.zk.ZookeeperRegistry;
-import org.miaohong.fishrpc.core.rpc.service.ServiceType;
 import org.miaohong.fishrpc.core.rpc.network.server.transport.handler.NettyServerMessageHandler;
+import org.miaohong.fishrpc.core.rpc.register.zk.ZookeeperRegistry;
 import org.miaohong.fishrpc.core.rpc.service.ServiceBootstrap;
+import org.miaohong.fishrpc.core.rpc.service.ServiceType;
 
 
 public class ServiceConfig<T> {

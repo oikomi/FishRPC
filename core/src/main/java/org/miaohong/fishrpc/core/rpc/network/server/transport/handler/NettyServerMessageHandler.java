@@ -19,9 +19,9 @@ import org.miaohong.fishrpc.core.rpc.concurrency.NamedThreadFactory;
 import org.miaohong.fishrpc.core.rpc.eventbus.event.ServiceRegistedEvent;
 import org.miaohong.fishrpc.core.rpc.proto.RpcRequest;
 import org.miaohong.fishrpc.core.rpc.proto.RpcResponse;
+import org.miaohong.fishrpc.core.rpc.server.proxy.CglibProxy;
 import org.miaohong.fishrpc.core.util.NetUtils;
 import org.miaohong.fishrpc.core.util.ThreadPoolUtils;
-import org.miaohong.fishrpc.core.rpc.server.proxy.CglibProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

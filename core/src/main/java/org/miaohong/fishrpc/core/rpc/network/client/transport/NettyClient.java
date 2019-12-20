@@ -4,13 +4,13 @@ import com.google.common.base.Preconditions;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import org.miaohong.fishrpc.core.execption.ClientCoreException;
+import org.miaohong.fishrpc.core.rpc.channel.ChannelState;
 import org.miaohong.fishrpc.core.rpc.eventbus.EventBus;
 import org.miaohong.fishrpc.core.rpc.eventbus.EventBusManager;
 import org.miaohong.fishrpc.core.rpc.eventbus.event.NettyClientHandlerRegistedEvent;
 import org.miaohong.fishrpc.core.rpc.network.AbstractNettyComponent;
 import org.miaohong.fishrpc.core.rpc.network.NetworkConfig;
 import org.miaohong.fishrpc.core.rpc.network.NetworkRole;
-import org.miaohong.fishrpc.core.rpc.channel.ChannelState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -3,8 +3,8 @@ package org.miaohong.fishrpc.core.runtime;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.miaohong.fishrpc.core.rpc.base.Destroyable;
-import org.miaohong.fishrpc.core.rpc.client.RpcClient;
 import org.miaohong.fishrpc.core.rpc.client.ConsumerBootstrap;
+import org.miaohong.fishrpc.core.rpc.client.RpcClient;
 import org.miaohong.fishrpc.core.rpc.server.RpcServer;
 import org.miaohong.fishrpc.core.rpc.service.ServiceBootstrap;
 import org.slf4j.Logger;
@@ -19,8 +19,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class RuntimeContext {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RuntimeContext.class);
-
     /**
      * 当前进程Id
      */
@@ -29,7 +27,7 @@ public class RuntimeContext {
      * 当前应用启动时间（用这个类加载时间为准）
      */
     public static final long START_TIME = now();
-
+    private static final Logger LOG = LoggerFactory.getLogger(RuntimeContext.class);
     private static final ConcurrentMap<String, Object> CONTEXT = Maps.newConcurrentMap();
 
     private static final Set<ServiceBootstrap> EXPORTED_SERVICE_CONFIGS = Sets.newConcurrentHashSet();

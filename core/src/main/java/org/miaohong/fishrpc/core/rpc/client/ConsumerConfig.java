@@ -22,27 +22,23 @@ public class ConsumerConfig<T> {
 
     private static final EventBus EVENT_BUS = EventBusManager.get();
 
-    protected Class<T> proxyClass;
+    static {
+        EVENT_BUS.register(new AbstractServiceStrategy.RpcClientHandlerListener());
+        EVENT_BUS.register(ServiceCacheListenerImpl.get());
+    }
 
+    protected Class<T> proxyClass;
     @Getter
     private String proxy = ProxyConstants.PROXY_JDK;
-
     @Getter
     private String register = RegisterConstants.REGISTER_ZOOKEEPER;
-
     @Getter
     private String strategy = StrategyConstants.STRATEGY_RANDOM;
-
     @Getter
     @Setter
     private String interfaceId;
 
     public ConsumerConfig() {
-    }
-
-    static {
-        EVENT_BUS.register(new AbstractServiceStrategy.RpcClientHandlerListener());
-        EVENT_BUS.register(ServiceCacheListenerImpl.get());
     }
 
     @SuppressWarnings("unchecked")

@@ -4,9 +4,9 @@ package org.miaohong.fishrpc.core.rpc.network.server.config;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.miaohong.fishrpc.core.execption.ServerCoreException;
 import org.miaohong.fishrpc.core.rpc.network.AbstractNetworkConfig;
-import org.miaohong.fishrpc.core.util.NetUtils;
 import org.miaohong.fishrpc.core.rpc.server.Server;
 import org.miaohong.fishrpc.core.rpc.server.ServerFactory;
+import org.miaohong.fishrpc.core.util.NetUtils;
 
 public class ServerConfig extends AbstractNetworkConfig {
 
