@@ -4,9 +4,9 @@ package org.miaohong.fishrpc.core.rpc.client.strategy;
 import org.miaohong.fishrpc.core.annotation.SpiMeta;
 import org.miaohong.fishrpc.core.rpc.network.client.transport.NettyClientHandler;
 import org.miaohong.fishrpc.core.rpc.register.serializer.ServiceInstance;
+import org.miaohong.fishrpc.core.util.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Random;
@@ -26,7 +26,7 @@ public class RandomStrategy extends AbstractServiceStrategy implements ServiceSt
     @Override
     public ServiceInstance getInstance(int timeout) {
         List<ServiceInstance> instances = instanceProvider.getInstances(timeout);
-        if (CollectionUtils.isEmpty(instances)) {
+        if (CommonUtils.isEmpty(instances)) {
             return null;
         }
         int thisIndex = random.nextInt(instances.size());
@@ -37,7 +37,7 @@ public class RandomStrategy extends AbstractServiceStrategy implements ServiceSt
     @Override
     public ServiceInstance getInstance() {
         List<ServiceInstance> instances = instanceProvider.getInstances();
-        if (CollectionUtils.isEmpty(instances)) {
+        if (CommonUtils.isEmpty(instances)) {
             return null;
         }
         int thisIndex = random.nextInt(instances.size());

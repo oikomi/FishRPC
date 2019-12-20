@@ -43,6 +43,7 @@ public class RpcContext {
 //            context.setClientRequestId(request.getAttachments().get(URLParamType.requestIdFromClient.getName()));
         }
         LOCAL_CONTEXT.set(context);
+
         return context;
     }
 

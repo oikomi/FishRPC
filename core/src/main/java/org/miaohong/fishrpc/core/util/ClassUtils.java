@@ -1,6 +1,5 @@
 package org.miaohong.fishrpc.core.util;
 
-import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -167,7 +166,7 @@ public final class ClassUtils {
      */
     public static <T> T newInstanceWithArgs(Class<T> clazz, Class<?>[] argTypes, Object[] args)
             throws RuntimeException {
-        if (CollectionUtils.isEmpty(Arrays.asList(argTypes))) {
+        if (CommonUtils.isEmpty(Arrays.asList(argTypes))) {
             return newInstance(clazz);
         }
         try {
