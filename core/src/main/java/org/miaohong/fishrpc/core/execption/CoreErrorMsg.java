@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class CoreErrorMsg implements Serializable {
 
-    private static final long serialVersionUID = 5954565648909663307L;
+    private static final long serialVersionUID = -8047844514998194783L;
 
     @Getter
     private int status;

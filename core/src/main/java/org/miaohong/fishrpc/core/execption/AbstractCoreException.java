@@ -2,7 +2,7 @@ package org.miaohong.fishrpc.core.execption;
 
 public abstract class AbstractCoreException extends RuntimeException {
 
-    private static final long serialVersionUID = -5362997510190915252L;
+    private static final long serialVersionUID = -6946200695043963963L;
 
     protected CoreErrorMsg coreErrorMsg = null;
     protected String errorMsg = null;
@@ -50,8 +50,6 @@ public abstract class AbstractCoreException extends RuntimeException {
     @Override
     public String getMessage() {
         return getOriginMessage();
-
-//        return "error_message: " + message + ", status: " + coreErrorMsg.getStatus() + ", error_code: " + coreErrorMsg.getErrorCode();
     }
 
     public String getOriginMessage() {

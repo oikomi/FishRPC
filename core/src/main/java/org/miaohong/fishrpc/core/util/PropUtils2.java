@@ -7,6 +7,7 @@ import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.convert.DefaultListDelimiterHandler;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.miaohong.fishrpc.core.execption.FrameworkException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,8 +32,8 @@ public class PropUtils2 {
             return builder.getConfiguration();
         } catch (ConfigurationException e) {
             // loading of the configuration file failed
-            LOG.error("can not read properties from file: {}, msg: {}", path, e.getMessage());
-            throw new RuntimeException("can not read properties from file");
+            LOG.error("can not read properties from file: {}, msg: {}", path, e.getMessage(), e);
+            throw new FrameworkException("can not read properties from file", e);
         }
     }
 

@@ -157,8 +157,4 @@ public class ServiceCacheListenerImpl implements ServiceCacheListener, InstanceP
         private static final ServiceCacheListenerImpl INSTANCE = new ServiceCacheListenerImpl();
     }
 
-//    public static class ServiceCacheEventAction {
-//
-//    }
-
 }

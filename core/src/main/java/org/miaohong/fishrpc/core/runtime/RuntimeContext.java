@@ -42,20 +42,17 @@ public class RuntimeContext {
 
     static {
         if (LOG.isInfoEnabled()) {
-            LOG.info("Welcome! Loading RPC Framework , PID is:{}", PID);
+            LOG.info("FISH RPC Framework , PID is:{}", PID);
         }
         // 初始化一些上下文
         initContext();
         // 初始化其它模块
         // 增加jvm关闭事件
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (LOG.isWarnEnabled()) {
-                    LOG.warn("RPC Framework catch JVM shutdown event, Run shutdown hook now.");
-                }
-                destroy();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            if (LOG.isWarnEnabled()) {
+                LOG.warn("RPC Framework catch JVM shutdown event, Run shutdown hook now.");
             }
+            destroy();
         }, "RPC-ShutdownHook"));
 
     }
@@ -125,8 +122,8 @@ public class RuntimeContext {
         return value == null ? CONTEXT.remove(key) : CONTEXT.put(key, value);
     }
 
-    public static ConcurrentMap getContext() {
-        return new ConcurrentHashMap(CONTEXT);
+    public static ConcurrentMap<String, Object> getContext() {
+        return new ConcurrentHashMap<>(CONTEXT);
     }
 
 }
