@@ -23,7 +23,7 @@ public class RpcEncoder extends MessageToByteEncoder {
     public void encode(ChannelHandlerContext ctx, Object in, ByteBuf out) throws Exception {
         LOG.info("do encode");
         if (genericClass.isInstance(in)) {
-            byte[] data = ExtensionLoader.getExtensionLoader(Serialization.class).getExtension(Serialization.class,
+            byte[] data = ExtensionLoader.getExtensionLoader(Serialization.class).getExtension(
                     "protobuf").serialize(in);
             out.writeInt(data.length);
             out.writeBytes(data);

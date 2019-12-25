@@ -14,7 +14,7 @@ public class ConsumerBootstrap<T> extends AbstractConsumerBootstrap<T> {
     private static final Logger LOG = LoggerFactory.getLogger(ConsumerBootstrap.class);
 
     private ServiceStrategy serviceStrategy = ExtensionLoader.getExtensionLoader(ServiceStrategy.class).
-            getExtension(ServiceStrategy.class, this.consumerConfig.getStrategy());
+            getExtension(this.consumerConfig.getStrategy());
 
     public ConsumerBootstrap(ConsumerConfig<T> consumerConfig) {
         super(consumerConfig);

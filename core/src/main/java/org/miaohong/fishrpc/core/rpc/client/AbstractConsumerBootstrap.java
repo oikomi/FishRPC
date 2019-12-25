@@ -19,9 +19,9 @@ public abstract class AbstractConsumerBootstrap<T> implements Destroyable, Regis
         Preconditions.checkNotNull(consumerConfig);
         this.consumerConfig = consumerConfig;
         this.proxyFactory = ExtensionLoader.getExtensionLoader(ProxyFactory.class).
-                getExtension(ProxyFactory.class, this.consumerConfig.getProxy());
+                getExtension(this.consumerConfig.getProxy());
         this.register = ExtensionLoader.getExtensionLoader(Register.class).
-                getExtension(Register.class, this.consumerConfig.getRegister());
+                getExtension(this.consumerConfig.getRegister());
     }
 
     public abstract void startRegister();

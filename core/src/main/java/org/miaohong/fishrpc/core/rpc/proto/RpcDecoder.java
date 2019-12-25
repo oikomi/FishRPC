@@ -37,7 +37,7 @@ public class RpcDecoder extends ByteToMessageDecoder {
         byte[] data = new byte[dataLength];
         in.readBytes(data);
 
-        Object obj = ExtensionLoader.getExtensionLoader(Serialization.class).getExtension(Serialization.class,
+        Object obj = ExtensionLoader.getExtensionLoader(Serialization.class).getExtension(
                 "protobuf").deserialize(data, genericClass);
 
         out.add(obj);

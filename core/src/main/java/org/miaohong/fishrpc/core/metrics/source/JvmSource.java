@@ -9,7 +9,7 @@ import java.lang.management.ManagementFactory;
 
 public class JvmSource implements Source {
 
-    private String sourceName = "jvm";
+    private static final String sourceName = "jvm";
 
     @Override
     public String getName() {

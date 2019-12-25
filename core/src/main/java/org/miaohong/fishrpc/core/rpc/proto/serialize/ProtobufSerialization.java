@@ -5,6 +5,7 @@ import io.protostuff.ProtostuffIOUtil;
 import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
 import org.miaohong.fishrpc.core.annotation.SpiMeta;
+import org.miaohong.fishrpc.core.execption.FrameworkException;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 import org.slf4j.Logger;
@@ -29,6 +30,7 @@ public class ProtobufSerialization implements Serialization {
         return (Schema<T>) cachedSchema.computeIfAbsent(cls, RuntimeSchema::createFrom);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> byte[] serialize(T obj) throws IOException {
         Class<T> cls = (Class<T>) obj.getClass();
@@ -38,7 +40,7 @@ public class ProtobufSerialization implements Serialization {
             return ProtostuffIOUtil.toByteArray(obj, schema, buffer);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
-            throw new IllegalStateException(e.getMessage(), e);
+            throw new FrameworkException(e.getMessage(), e);
         } finally {
             buffer.clear();
         }
