@@ -81,7 +81,7 @@ public class HardwareUtils {
                 return -1;
 
             default:
-                LOG.error("Unrecognized OS: " + OperatingSystem.getCurrentOperatingSystem());
+                LOG.error("Unrecognized OS: {}", OperatingSystem.getCurrentOperatingSystem());
                 return -1;
         }
     }

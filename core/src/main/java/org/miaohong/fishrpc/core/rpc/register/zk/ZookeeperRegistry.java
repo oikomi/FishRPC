@@ -13,6 +13,7 @@ import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.KeeperException;
 import org.miaohong.fishrpc.core.annotation.SpiMeta;
+import org.miaohong.fishrpc.core.execption.FrameworkException;
 import org.miaohong.fishrpc.core.execption.SystemCoreException;
 import org.miaohong.fishrpc.core.rpc.client.ConsumerConfig;
 import org.miaohong.fishrpc.core.rpc.eventbus.event.EventAction;
@@ -113,7 +114,7 @@ public class ZookeeperRegistry extends AbstractRegister implements UnhandledErro
             zkClient.start();
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
-            throw new SystemCoreException("Failed to start zookeeper zkClient", e);
+            throw new FrameworkException("Failed to start zookeeper zkClient", e);
         }
         Preconditions.checkState(zkClient.getState() == CuratorFrameworkState.STARTED,
                 "zookeeper registry not started!");
@@ -154,7 +155,7 @@ public class ZookeeperRegistry extends AbstractRegister implements UnhandledErro
             LOG.warn("service has exists in zookeeper, service={}", serverUrl);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
-            throw new SystemCoreException(e.getMessage());
+            throw new FrameworkException(e.getMessage());
         }
     }
 
@@ -176,7 +177,7 @@ public class ZookeeperRegistry extends AbstractRegister implements UnhandledErro
             LOG.warn("service has exists in zookeeper, service={}", serverUrl);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
-            throw new SystemCoreException(e.getMessage());
+            throw new FrameworkException(e.getMessage());
         }
 
     }
@@ -219,13 +220,14 @@ public class ZookeeperRegistry extends AbstractRegister implements UnhandledErro
         return zkClient;
     }
 
+
     private void closePathChildrenCache() {
         for (Map.Entry<ConsumerConfig, PathChildrenCache> entry : INTERFACE_SERVICE_CACHE.entrySet()) {
             try {
                 entry.getValue().close();
             } catch (Exception e) {
                 LOG.error("Close PathChildrenCache error!", e);
-                throw new SystemCoreException(e.getMessage());
+                throw new FrameworkException(e.getMessage());
             }
         }
     }

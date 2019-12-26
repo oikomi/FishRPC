@@ -1,6 +1,7 @@
 package org.miaohong.fishrpc.core.rpc.network.server.transport.handler;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Maps;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -10,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 @io.netty.channel.ChannelHandler.Sharable
@@ -20,7 +20,7 @@ public class NettyServerChannelManagerHandler extends ChannelInboundHandlerAdapt
     private static final Logger LOG = LoggerFactory.getLogger(NettyServerChannelManagerHandler.class);
     private static final int MAX_CHANNEL_SIZE = 65535;
     @Getter
-    private ConcurrentMap<String, Channel> channels = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<String, Channel> CHANNELS = Maps.newConcurrentMap();
     private int maxChannelsize;
 
     public NettyServerChannelManagerHandler() {
@@ -37,16 +37,16 @@ public class NettyServerChannelManagerHandler extends ChannelInboundHandlerAdapt
     public void channelRegistered(ChannelHandlerContext ctx) {
         Preconditions.checkState(maxChannelsize > 0, "max channel size must be set");
         Channel channel = ctx.channel();
-        LOG.info("channel size is {}", channels.size());
-        if (channels.size() >= maxChannelsize) {
+        LOG.info("channel size is {}", CHANNELS.size());
+        if (CHANNELS.size() >= maxChannelsize) {
             // 超过最大连接数限制，直接close连接
             LOG.warn("NettyServerChannelManagerHandler channelConnected channel size out of limit: limit={} current={}",
-                    maxChannelsize, channels.size());
+                    maxChannelsize, CHANNELS.size());
             channel.close();
         } else {
             String channelKey = getChannelKey((InetSocketAddress) channel.localAddress(),
                     (InetSocketAddress) channel.remoteAddress());
-            channels.put(channelKey, channel);
+            CHANNELS.put(channelKey, channel);
             ctx.fireChannelRegistered();
         }
     }
@@ -56,12 +56,12 @@ public class NettyServerChannelManagerHandler extends ChannelInboundHandlerAdapt
         Channel channel = ctx.channel();
         String channelKey = getChannelKey((InetSocketAddress) channel.localAddress(),
                 (InetSocketAddress) channel.remoteAddress());
-        channels.remove(channelKey);
+        CHANNELS.remove(channelKey);
         ctx.fireChannelUnregistered();
     }
 
     public void close() {
-        for (Map.Entry<String, Channel> entry : channels.entrySet()) {
+        for (Map.Entry<String, Channel> entry : CHANNELS.entrySet()) {
             try {
                 Channel channel = entry.getValue();
                 if (channel != null) {

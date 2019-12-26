@@ -9,7 +9,6 @@ public abstract class AbstractNetworkConfig implements NetworkConfig {
     protected String host;
     protected int port;
 
-
     @Override
     public String getServerAddr() {
         return host + ":" + port;

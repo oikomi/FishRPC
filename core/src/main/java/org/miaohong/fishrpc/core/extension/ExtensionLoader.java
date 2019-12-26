@@ -20,9 +20,8 @@ import java.util.concurrent.ConcurrentMap;
 public class ExtensionLoader<T> {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExtensionLoader.class);
-
+    private static final Objenesis OBJ_GEN = new ObjenesisStd(true);
     private static ConcurrentMap<Class<?>, ExtensionLoader<?>> extensionLoaders = Maps.newConcurrentMap();
-    private static Objenesis objenesis = new ObjenesisStd(true);
     private ConcurrentMap<String, T> extensionClasses = Maps.newConcurrentMap();
     private boolean isSingleton = true;
     private Class<T> type;
@@ -117,7 +116,7 @@ public class ExtensionLoader<T> {
 
             if (!isSingleton) {
                 checkConstructorPublic((Class<T>) extensionClasses.get(name).getClass());
-                return (T) objenesis.newInstance(extensionClasses.get(name).getClass());
+                return (T) OBJ_GEN.newInstance(extensionClasses.get(name).getClass());
             } else {
                 return extensionClasses.get(name);
             }

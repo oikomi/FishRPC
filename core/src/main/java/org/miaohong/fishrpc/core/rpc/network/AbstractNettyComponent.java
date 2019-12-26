@@ -16,8 +16,8 @@ import org.miaohong.fishrpc.core.conf.prop.CommonNettyPropConfig;
 import org.miaohong.fishrpc.core.execption.FatalExitExceptionHandler;
 import org.miaohong.fishrpc.core.execption.ServerCoreException;
 import org.miaohong.fishrpc.core.rpc.base.Destroyable;
-import org.miaohong.fishrpc.core.rpc.concurrency.NamedThreadFactory;
 import org.miaohong.fishrpc.core.rpc.network.server.transport.ServerchannelInitializer;
+import org.miaohong.fishrpc.core.util.concurrency.NamedThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

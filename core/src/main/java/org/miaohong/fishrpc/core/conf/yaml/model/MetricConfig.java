@@ -7,10 +7,6 @@ import java.util.List;
 
 public class MetricConfig implements ModelConfig {
 
-//    private MetricConfig() {
-//        throw new AssertionError();
-//    }
-
     @Getter
     @Setter
     private List<String> sources;

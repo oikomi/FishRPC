@@ -5,14 +5,15 @@ import com.google.common.collect.Maps;
 import com.google.common.eventbus.Subscribe;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.recipes.cache.ChildData;
+import org.miaohong.fishrpc.core.execption.FrameworkException;
 import org.miaohong.fishrpc.core.rpc.client.NettyClientFactory;
 import org.miaohong.fishrpc.core.rpc.client.strategy.InstanceProvider;
-import org.miaohong.fishrpc.core.rpc.concurrency.NamedThreadFactory;
 import org.miaohong.fishrpc.core.rpc.eventbus.event.NettyClientHandlerRegistedEvent;
 import org.miaohong.fishrpc.core.rpc.network.client.config.ClientConfig;
 import org.miaohong.fishrpc.core.rpc.register.serializer.InstanceSerializer;
 import org.miaohong.fishrpc.core.rpc.register.serializer.ServiceInstance;
 import org.miaohong.fishrpc.core.util.ThreadPoolUtils;
+import org.miaohong.fishrpc.core.util.concurrency.NamedThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+
+import static org.miaohong.fishrpc.core.execption.CoreErrorConstant.REGISTER_DEFAULT_ERROR;
 
 public class ServiceCacheListenerImpl implements ServiceCacheListener, InstanceProvider {
 
@@ -37,7 +40,6 @@ public class ServiceCacheListenerImpl implements ServiceCacheListener, InstanceP
 
     private ReentrantLock lock = new ReentrantLock();
     private Condition connected = lock.newCondition();
-
 
     private ServiceCacheListenerImpl() {
     }
@@ -104,8 +106,8 @@ public class ServiceCacheListenerImpl implements ServiceCacheListener, InstanceP
                     size = instances.size();
                 }
             } catch (InterruptedException e) {
-                LOG.error("Waiting for available node is interrupted! ", e);
-                throw new RuntimeException("Can't connect any servers!", e);
+                LOG.error("Waiting for available node is interrupted! {} ", e.getMessage(), e);
+                throw new FrameworkException("Can't connect any servers!", REGISTER_DEFAULT_ERROR);
             }
         }
 
@@ -135,6 +137,7 @@ public class ServiceCacheListenerImpl implements ServiceCacheListener, InstanceP
                 waitInstances.put(serverAddr, serviceInstance);
             } catch (Exception e) {
                 LOG.error(e.getMessage(), e);
+                throw new FrameworkException(e.getMessage(), REGISTER_DEFAULT_ERROR);
             }
         } else {
             instances.remove(serverAddr);

@@ -32,7 +32,7 @@ public class RpcServer extends Server {
             RuntimeContext.cacheRpcServer(this);
         } catch (Exception e) {
             LOG.error("RPCServer init failed {}", e.getMessage(), e);
-            throw new ServerCoreException(e, CoreErrorConstant.SERVER_DEFAULT_ERROR);
+            throw new ServerCoreException(e.getMessage(), CoreErrorConstant.SERVER_DEFAULT_ERROR);
         } finally {
             serverState = ServerState.CLOSE;
         }

@@ -1,4 +1,4 @@
-package org.miaohong.fishrpc.core.rpc.concurrency;
+package org.miaohong.fishrpc.core.util.concurrency;
 
 import com.google.common.base.Preconditions;
 import org.miaohong.fishrpc.core.execption.FatalExitExceptionHandler;

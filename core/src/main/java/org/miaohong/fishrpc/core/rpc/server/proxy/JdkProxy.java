@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 
+import static org.miaohong.fishrpc.core.execption.CoreErrorConstant.SERVER_PROXY_ERROR;
+
 public class JdkProxy {
 
     private static final Logger LOG = LoggerFactory.getLogger(JdkProxy.class);
@@ -17,8 +19,8 @@ public class JdkProxy {
             method.setAccessible(true);
             return method.invoke(serviceBean, parameters);
         } catch (Exception e) {
-            LOG.error(e.getMessage(), e);
-            throw new ServerCoreException(e.getMessage());
+            LOG.error("JdkProxy invoke failed {}", e.getMessage(), e);
+            throw new ServerCoreException("JdkProxy invoke failed", SERVER_PROXY_ERROR);
         }
     }
 }
