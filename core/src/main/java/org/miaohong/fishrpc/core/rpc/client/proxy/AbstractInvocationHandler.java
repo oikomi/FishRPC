@@ -1,5 +1,6 @@
 package org.miaohong.fishrpc.core.rpc.client.proxy;
 
+import org.miaohong.fishrpc.core.rpc.chain.FilterChain;
 import org.miaohong.fishrpc.core.rpc.proto.RpcRequest;
 
 import java.lang.reflect.Method;
@@ -7,8 +8,14 @@ import java.util.UUID;
 
 public abstract class AbstractInvocationHandler {
 
+    private FilterChain filterChain;
+
     protected boolean isLocalMethod(Method method) {
         return method.getDeclaringClass().equals(Object.class);
+    }
+
+    protected void sendMsg(RpcRequest request) {
+        filterChain.invoke(request);
     }
 
     protected RpcRequest buildRequest(Method method, Object[] args) {

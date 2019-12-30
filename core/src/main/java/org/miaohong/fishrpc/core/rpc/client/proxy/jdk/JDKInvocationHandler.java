@@ -1,14 +1,11 @@
 package org.miaohong.fishrpc.core.rpc.client.proxy.jdk;
 
 import org.miaohong.fishrpc.core.annotation.Internal;
-import org.miaohong.fishrpc.core.execption.ClientCoreException;
-import org.miaohong.fishrpc.core.execption.CoreErrorMsg;
-import org.miaohong.fishrpc.core.rpc.client.RPCFuture;
+import org.miaohong.fishrpc.core.rpc.chain.ConsumerFilterChain;
+import org.miaohong.fishrpc.core.rpc.chain.FilterChain;
 import org.miaohong.fishrpc.core.rpc.client.proxy.AbstractInvocationHandler;
 import org.miaohong.fishrpc.core.rpc.client.strategy.ServiceStrategy;
-import org.miaohong.fishrpc.core.rpc.network.client.transport.NettyClientHandler;
 import org.miaohong.fishrpc.core.rpc.proto.RpcRequest;
-import org.miaohong.fishrpc.core.rpc.register.serializer.ServiceInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +18,8 @@ public class JDKInvocationHandler<T> extends AbstractInvocationHandler implement
     private static final Logger LOG = LoggerFactory.getLogger(JDKInvocationHandler.class);
 
     private ServiceStrategy serviceStrategy;
+
+    private FilterChain filterChain = new ConsumerFilterChain();
 
     public JDKInvocationHandler(ServiceStrategy serviceStrategy) {
         this.serviceStrategy = serviceStrategy;
@@ -46,22 +45,24 @@ public class JDKInvocationHandler<T> extends AbstractInvocationHandler implement
         RpcRequest request = buildRequest(method, args);
         LOG.info("send rpc");
 
-        ServiceInstance serviceInstance = serviceStrategy.getInstance(1000);
+//        ServiceInstance serviceInstance = serviceStrategy.getInstance(1000);
+//
+//        LOG.info("serviceInstance : {}", serviceInstance);
+//
+//        if (serviceInstance == null) {
+//            throw new ClientCoreException(new CoreErrorMsg(-1, 1001, "cantnot find service"));
+//        }
+//
+//        NettyClientHandler handler = serviceStrategy.getNettyClientHandler(
+//                serviceInstance.getServerAddr());
+//
+//        LOG.info("choose handler");
 
-        LOG.info("serviceInstance : {}", serviceInstance);
+        return filterChain.invoke(request);
 
-        if (serviceInstance == null) {
-            throw new ClientCoreException(new CoreErrorMsg(-1, 1001, "cantnot find service"));
-        }
+//        RPCFuture rpcFuture = handler.sendRequest(request);
 
-        NettyClientHandler handler = serviceStrategy.getNettyClientHandler(
-                serviceInstance.getServerAddr());
-
-        LOG.info("choose handler");
-
-        RPCFuture rpcFuture = handler.sendRequest(request);
-
-        return rpcFuture.get();
+//        return rpcFuture.get();
     }
 
 }

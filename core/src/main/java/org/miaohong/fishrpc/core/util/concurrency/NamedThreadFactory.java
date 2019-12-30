@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
-public final class NamedThreadFactory implements ThreadFactory {
+public class NamedThreadFactory implements ThreadFactory {
 
     private static final String DEFAULT_POOL_NAME = "default-pool";
 

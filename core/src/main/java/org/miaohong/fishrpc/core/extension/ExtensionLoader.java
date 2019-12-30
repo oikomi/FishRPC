@@ -1,6 +1,7 @@
 package org.miaohong.fishrpc.core.extension;
 
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.miaohong.fishrpc.core.annotation.Scope;
 import org.miaohong.fishrpc.core.annotation.Spi;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.util.List;
 import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentMap;
 
@@ -43,14 +45,17 @@ public class ExtensionLoader<T> {
 
     private static <T> void checkInterfaceType(Class<T> clz) {
         if (clz == null) {
+            LOG.error("Error extension type is null");
             throw new FrameworkException("Error extension type is null");
         }
 
         if (!clz.isInterface() || !Modifier.isAbstract(clz.getModifiers())) {
+            LOG.error("Error extension class must be interface or abstract class, clz is " + clz.getName());
             throw new FrameworkException("Error extension class must be interface or abstract class, clz is " + clz.getName());
         }
 
         if (!isSpiType(clz)) {
+            LOG.error("Error extension type without @SpiMeta annotation, clz is " + clz.getName());
             throw new FrameworkException("Error extension type without @SpiMeta annotation, clz is " + clz.getName());
         }
     }
@@ -82,12 +87,14 @@ public class ExtensionLoader<T> {
 
     private void checkClassInherit(Class<T> clz) {
         if (!type.isAssignableFrom(clz)) {
+            LOG.error("Error is not instanceof " + type.getName());
             throw new FrameworkException("Error is not instanceof " + type.getName());
         }
     }
 
     private void checkClassPublic(Class<T> clz) {
         if (!Modifier.isPublic(clz.getModifiers())) {
+            LOG.error("Error is not a public class, clz is " + clz);
             throw new FrameworkException("Error is not a public class, clz is " + clz);
         }
     }
@@ -96,6 +103,7 @@ public class ExtensionLoader<T> {
         Constructor<?>[] constructors = clz.getConstructors();
 
         if (CommonUtils.isEmpty(constructors)) {
+            LOG.error("Error has no public no-args constructor, clz is " + clz);
             throw new FrameworkException("Error has no public no-args constructor, clz is " + clz);
         }
 
@@ -105,6 +113,7 @@ public class ExtensionLoader<T> {
             }
         }
 
+        LOG.error("Error has no public no-args constructor, clz is " + clz);
         throw new FrameworkException("Error has no public no-args constructor, clz is " + clz);
     }
 
@@ -130,4 +139,16 @@ public class ExtensionLoader<T> {
 
         return extensionClasses.get(name);
     }
+
+
+    public List<T> getAllExtension() {
+        ServiceLoader<T> ss = ServiceLoader.load(type);
+        for (T s : ss) {
+            String extensionName = s.getClass().getAnnotation(SpiMeta.class).name();
+            extensionClasses.putIfAbsent(extensionName, s);
+        }
+
+        return Lists.newArrayList(extensionClasses.values());
+    }
+
 }

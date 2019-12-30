@@ -55,7 +55,7 @@ public class RPCFuture implements Future<Object> {
                 return null;
             }
         } else {
-            throw new RuntimeException("Timeout exception. Request id: " + this.request.getRequestId()
+            throw new ClientCoreException("Timeout exception. Request id: " + this.request.getRequestId()
                     + ". Request class name: " + this.request.getInterfaceId()
                     + ". Request method: " + this.request.getMethodName());
         }

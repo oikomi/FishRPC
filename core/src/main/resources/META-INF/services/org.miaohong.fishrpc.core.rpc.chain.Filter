@@ -1,0 +1,5 @@
+
+
+org.miaohong.fishrpc.core.rpc.chain.ConsumerSslFilter
+org.miaohong.fishrpc.core.rpc.chain.ConsumerTraceFilter
+org.miaohong.fishrpc.core.rpc.chain.ConsumerMessageFilter

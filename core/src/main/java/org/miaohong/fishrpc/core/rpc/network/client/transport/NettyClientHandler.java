@@ -1,8 +1,6 @@
 package org.miaohong.fishrpc.core.rpc.network.client.transport;
 
 import com.google.common.collect.Maps;
-import com.google.common.util.concurrent.ListeningExecutorService;
-import com.google.common.util.concurrent.MoreExecutors;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -17,17 +15,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.Executors;
 
 public class NettyClientHandler extends SimpleChannelInboundHandler<RpcResponse> implements RpcHandler {
 
     public static final String NAME = "message client";
     private static final Logger LOG = LoggerFactory.getLogger(NettyClientHandler.class);
     private ConcurrentMap<String, RPCFuture> pendingRpc = Maps.newConcurrentMap();
-
-    private ListeningExecutorService service = MoreExecutors.listeningDecorator(
-            Executors.newFixedThreadPool(10));
-
 
     @Getter
     private Channel channel;
