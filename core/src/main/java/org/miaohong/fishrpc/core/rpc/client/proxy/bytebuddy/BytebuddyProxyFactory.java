@@ -8,7 +8,6 @@ import org.miaohong.fishrpc.core.annotation.SpiMeta;
 import org.miaohong.fishrpc.core.execption.ClientCoreException;
 import org.miaohong.fishrpc.core.rpc.client.proxy.ProxyConstants;
 import org.miaohong.fishrpc.core.rpc.client.proxy.ProxyFactory;
-import org.miaohong.fishrpc.core.rpc.client.strategy.ServiceStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,14 +23,14 @@ public class BytebuddyProxyFactory implements ProxyFactory {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T getProxy(Class<T> clz, ServiceStrategy serviceStrategy) {
+    public <T> T getProxy(Class<T> clz) {
         Class<? extends T> cls = PROXY_CLASS_MAP.get(clz);
         if (cls == null) {
             cls = new ByteBuddy()
                     .subclass(clz)
                     .method(ElementMatchers.isDeclaredBy(clz).or(ElementMatchers.isEquals())
                             .or(ElementMatchers.isToString().or(ElementMatchers.isHashCode())))
-                    .intercept(MethodDelegation.to(new BytebuddyInvocationHandler(serviceStrategy), "handler"))
+                    .intercept(MethodDelegation.to(new BytebuddyInvocationHandler(), "handler"))
                     .make()
                     .load(clz.getClassLoader(), ClassLoadingStrategy.Default.INJECTION)
                     .getLoaded();

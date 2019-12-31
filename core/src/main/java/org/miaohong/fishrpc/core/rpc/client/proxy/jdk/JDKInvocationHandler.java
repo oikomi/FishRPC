@@ -4,7 +4,6 @@ import org.miaohong.fishrpc.core.annotation.Internal;
 import org.miaohong.fishrpc.core.rpc.chain.ConsumerFilterChain;
 import org.miaohong.fishrpc.core.rpc.chain.FilterChain;
 import org.miaohong.fishrpc.core.rpc.client.proxy.AbstractInvocationHandler;
-import org.miaohong.fishrpc.core.rpc.client.strategy.ServiceStrategy;
 import org.miaohong.fishrpc.core.rpc.proto.RpcRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +16,9 @@ public class JDKInvocationHandler<T> extends AbstractInvocationHandler implement
 
     private static final Logger LOG = LoggerFactory.getLogger(JDKInvocationHandler.class);
 
-    private ServiceStrategy serviceStrategy;
-
     private FilterChain filterChain = new ConsumerFilterChain();
 
-    public JDKInvocationHandler(ServiceStrategy serviceStrategy) {
-        this.serviceStrategy = serviceStrategy;
+    public JDKInvocationHandler() {
     }
 
     @Override
