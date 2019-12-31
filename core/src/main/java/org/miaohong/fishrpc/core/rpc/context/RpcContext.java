@@ -1,4 +1,4 @@
-package org.miaohong.fishrpc.core.rpc.contex;
+package org.miaohong.fishrpc.core.rpc.context;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,12 +8,12 @@ import org.miaohong.fishrpc.core.rpc.proto.RpcResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RpcContex {
+public class RpcContext {
 
-    private static final ThreadLocal<RpcContex> LOCAL_CONTEXT = new ThreadLocal<RpcContex>() {
+    private static final ThreadLocal<RpcContext> LOCAL_CONTEXT = new ThreadLocal<RpcContext>() {
         @Override
-        protected RpcContex initialValue() {
-            return new RpcContex();
+        protected RpcContext initialValue() {
+            return new RpcContext();
         }
     };
 
@@ -33,18 +33,14 @@ public class RpcContex {
 
     @Getter
     @Setter
-    private Object result;
-
-    @Getter
-    @Setter
     private String clientRequestId = null;
 
-    public static RpcContex getContext() {
+    public static RpcContext getContext() {
         return LOCAL_CONTEXT.get();
     }
 
-    public static RpcContex init(RpcRequest request) {
-        RpcContex context = new RpcContex();
+    public static RpcContext init(RpcRequest request) {
+        RpcContext context = new RpcContext();
         if (request != null) {
             context.setRequest(request);
 //            context.setClientRequestId(request.getAttachments().get(URLParamType.requestIdFromClient.getName()));
@@ -54,8 +50,8 @@ public class RpcContex {
         return context;
     }
 
-    public static RpcContex init() {
-        RpcContex context = new RpcContex();
+    public static RpcContext init() {
+        RpcContext context = new RpcContext();
         LOCAL_CONTEXT.set(context);
         return context;
     }

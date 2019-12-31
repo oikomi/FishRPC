@@ -1,4 +1,4 @@
-package org.miaohong.fishrpc.core.rpc.contex;
+package org.miaohong.fishrpc.core.rpc.context;
 
 public class AttributesConstants {
 

@@ -2,6 +2,7 @@ package org.miaohong.fishrpc.core.rpc.service;
 
 import com.google.common.base.Preconditions;
 import com.google.common.eventbus.Subscribe;
+import org.jetbrains.annotations.NotNull;
 import org.miaohong.fishrpc.core.rpc.base.Destroyable;
 import org.miaohong.fishrpc.core.rpc.eventbus.event.ServerStartedEvent;
 import org.miaohong.fishrpc.core.rpc.network.NetworkConfig;
@@ -102,7 +103,7 @@ public class ServiceBootstrap<T> implements RegisterRole, Destroyable {
         private static NetworkConfig serverConfig;
 
         @Subscribe
-        public static void doAction(final Object event) {
+        public static void doAction(@NotNull final Object event) {
             LOG.info("Received event [{}] and will take a action", event);
             if (event instanceof ServerStartedEvent) {
                 LOG.info("server is started");

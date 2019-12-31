@@ -5,7 +5,7 @@ import org.miaohong.fishrpc.core.annotation.SpiMeta;
 import org.miaohong.fishrpc.core.rpc.chain.FilterInvoke;
 import org.miaohong.fishrpc.core.rpc.chain.FilterOrder;
 import org.miaohong.fishrpc.core.rpc.chain.FilterType;
-import org.miaohong.fishrpc.core.rpc.contex.RpcContex;
+import org.miaohong.fishrpc.core.rpc.context.RpcContext;
 import org.miaohong.fishrpc.core.rpc.proto.RpcRequest;
 import org.miaohong.fishrpc.core.rpc.trace.TraceContex;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class ConsumerTraceFilter extends AbstractFilter {
     @Override
     protected void processBusiness(FilterInvoke invoke, RpcRequest request) {
 
-        RpcContex context = RpcContex.getContext();
+        RpcContext context = RpcContext.getContext();
         TraceContex traceContex = new TraceContex();
     }
 

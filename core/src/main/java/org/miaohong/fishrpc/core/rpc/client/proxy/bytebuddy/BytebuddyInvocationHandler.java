@@ -8,7 +8,7 @@ import org.miaohong.fishrpc.core.annotation.Internal;
 import org.miaohong.fishrpc.core.rpc.chain.ConsumerFilterChain;
 import org.miaohong.fishrpc.core.rpc.chain.FilterChain;
 import org.miaohong.fishrpc.core.rpc.client.proxy.AbstractInvocationHandler;
-import org.miaohong.fishrpc.core.rpc.contex.RpcContex;
+import org.miaohong.fishrpc.core.rpc.context.RpcContext;
 import org.miaohong.fishrpc.core.rpc.proto.RpcRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +49,7 @@ public class BytebuddyInvocationHandler extends AbstractInvocationHandler {
         LOG.debug(method.getDeclaringClass().getName());
         LOG.debug(method.getName());
 
-        RpcContex.init(request);
+        RpcContext.init(request);
 
         return filterChain.invoke(request);
     }

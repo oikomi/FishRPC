@@ -36,21 +36,21 @@ public class RPCFuture implements Future<Object> {
     }
 
     @Override
-    public Object get() throws InterruptedException, ExecutionException {
+    public RpcResponse get() throws InterruptedException, ExecutionException {
         sync.acquire(-1);
         if (this.response != null) {
-            return this.response.getResult();
+            return this.response;
         } else {
             throw new ClientCoreException(new CoreErrorMsg(-1, 1005, "call failed"));
         }
     }
 
     @Override
-    public Object get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+    public RpcResponse get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
         boolean success = sync.tryAcquireNanos(-1, unit.toNanos(timeout));
         if (success) {
             if (response != null) {
-                return response.getResult();
+                return response;
             } else {
                 return null;
             }

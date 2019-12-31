@@ -10,8 +10,8 @@ import org.miaohong.fishrpc.core.rpc.chain.FilterOrder;
 import org.miaohong.fishrpc.core.rpc.chain.FilterType;
 import org.miaohong.fishrpc.core.rpc.client.strategy.ServiceStrategy;
 import org.miaohong.fishrpc.core.rpc.client.strategy.StrategyConstants;
-import org.miaohong.fishrpc.core.rpc.contex.AttributesConstants;
-import org.miaohong.fishrpc.core.rpc.contex.RpcContex;
+import org.miaohong.fishrpc.core.rpc.context.AttributesConstants;
+import org.miaohong.fishrpc.core.rpc.context.RpcContext;
 import org.miaohong.fishrpc.core.rpc.proto.RpcRequest;
 import org.miaohong.fishrpc.core.rpc.register.serializer.ServiceInstance;
 import org.slf4j.Logger;
@@ -42,7 +42,7 @@ public class ConsumerLbFilter extends AbstractFilter {
             throw new ClientCoreException(new CoreErrorMsg(-1, 1001, "cantnot find service"));
         }
 
-        RpcContex context = RpcContex.getContext();
+        RpcContext context = RpcContext.getContext();
         context.getAttributes().put(AttributesConstants.SERVICE_ATTR, serviceInstance);
 
     }

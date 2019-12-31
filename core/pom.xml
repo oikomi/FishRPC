@@ -91,9 +91,9 @@
         </dependency>
 
         <dependency>
-            <groupId>javassist</groupId>
+            <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
-            <version>${javassist.version}</version>
+            <version>3.26.0-GA</version>
         </dependency>
 
         <dependency>
@@ -214,6 +214,13 @@
             <artifactId>scala-library</artifactId>
             <version>2.13.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>18.0.0</version>
+        </dependency>
+
 
     </dependencies>
 

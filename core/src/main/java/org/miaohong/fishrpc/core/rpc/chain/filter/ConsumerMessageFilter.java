@@ -9,8 +9,8 @@ import org.miaohong.fishrpc.core.rpc.chain.FilterType;
 import org.miaohong.fishrpc.core.rpc.client.RPCFuture;
 import org.miaohong.fishrpc.core.rpc.client.strategy.ServiceStrategy;
 import org.miaohong.fishrpc.core.rpc.client.strategy.StrategyConstants;
-import org.miaohong.fishrpc.core.rpc.contex.AttributesConstants;
-import org.miaohong.fishrpc.core.rpc.contex.RpcContex;
+import org.miaohong.fishrpc.core.rpc.context.AttributesConstants;
+import org.miaohong.fishrpc.core.rpc.context.RpcContext;
 import org.miaohong.fishrpc.core.rpc.network.client.transport.NettyClientHandler;
 import org.miaohong.fishrpc.core.rpc.proto.RpcRequest;
 import org.miaohong.fishrpc.core.rpc.register.serializer.ServiceInstance;
@@ -37,7 +37,7 @@ public class ConsumerMessageFilter extends AbstractFilter {
 
         LOG.info("send rpc");
 
-        RpcContex context = RpcContex.getContext();
+        RpcContext context = RpcContext.getContext();
         ServiceInstance serviceInstance = (ServiceInstance) context.getAttributes().get(AttributesConstants.SERVICE_ATTR);
 
         NettyClientHandler handler = serviceStrategy.getNettyClientHandler(
@@ -48,7 +48,7 @@ public class ConsumerMessageFilter extends AbstractFilter {
         RPCFuture rpcFuture = handler.sendRequest(request);
 
         try {
-            context.setResult(rpcFuture.get());
+            context.setResponse(rpcFuture.get());
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
