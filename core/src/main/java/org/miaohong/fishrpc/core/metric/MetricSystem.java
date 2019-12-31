@@ -1,12 +1,12 @@
-package org.miaohong.fishrpc.core.metrics;
+package org.miaohong.fishrpc.core.metric;
 
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.base.Preconditions;
 import org.miaohong.fishrpc.core.conf.yaml.YamlConfigManager;
 import org.miaohong.fishrpc.core.conf.yaml.model.MetricConfig;
 import org.miaohong.fishrpc.core.execption.MetricCoreExecption;
-import org.miaohong.fishrpc.core.metrics.sink.Sink;
-import org.miaohong.fishrpc.core.metrics.source.Source;
+import org.miaohong.fishrpc.core.metric.sink.Sink;
+import org.miaohong.fishrpc.core.metric.source.Source;
 import org.miaohong.fishrpc.core.util.ClassUtils;
 import org.miaohong.fishrpc.core.util.CommonUtils;
 import org.objenesis.Objenesis;

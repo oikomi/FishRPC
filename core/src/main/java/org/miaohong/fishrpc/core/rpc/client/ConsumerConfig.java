@@ -29,7 +29,7 @@ public class ConsumerConfig<T> {
 
     protected Class<T> proxyClass;
     @Getter
-    private String proxy = ProxyConstants.PROXY_JDK;
+    private String proxy = ProxyConstants.PROXY_BYTEBUDDY;
     @Getter
     private String register = RegisterConstants.REGISTER_ZOOKEEPER;
     @Getter

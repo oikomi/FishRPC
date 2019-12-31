@@ -1,4 +1,4 @@
-package org.miaohong.fishrpc.core.metrics.source;
+package org.miaohong.fishrpc.core.metric.source;
 
 import com.codahale.metrics.MetricRegistry;
 

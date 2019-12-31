@@ -21,7 +21,7 @@ public class Client {
 
         GatewayProto s = rpcClient.refer();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             LOG.info("i = {}", i);
             try {
                 Person person = s.person();

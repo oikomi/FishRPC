@@ -1,4 +1,4 @@
-package org.miaohong.fishrpc.core.metrics.sink;
+package org.miaohong.fishrpc.core.metric.sink;
 
 import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.MetricRegistry;

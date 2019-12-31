@@ -1,8 +1,13 @@
-package org.miaohong.fishrpc.core.rpc.chain;
+package org.miaohong.fishrpc.core.rpc.chain.filter;
 
 import lombok.ToString;
 import org.miaohong.fishrpc.core.annotation.SpiMeta;
+import org.miaohong.fishrpc.core.rpc.chain.FilterInvoke;
+import org.miaohong.fishrpc.core.rpc.chain.FilterOrder;
+import org.miaohong.fishrpc.core.rpc.chain.FilterType;
+import org.miaohong.fishrpc.core.rpc.contex.RpcContex;
 import org.miaohong.fishrpc.core.rpc.proto.RpcRequest;
+import org.miaohong.fishrpc.core.rpc.trace.TraceContex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,17 +23,10 @@ public class ConsumerTraceFilter extends AbstractFilter {
     }
 
     @Override
-    public Object invoke(FilterInvoke invoke, RpcRequest request) {
-        LOG.info("ConsumerTraceFilter start invoke");
+    protected void processBusiness(FilterInvoke invoke, RpcRequest request) {
 
-        LOG.info("invoke is {}", invoke);
-
-        if (invoke == null) {
-            return null;
-        }
-
-        return invoke.invoke(request);
-
+        RpcContex context = RpcContex.getContext();
+        TraceContex traceContex = new TraceContex();
     }
 
 }

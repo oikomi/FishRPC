@@ -45,24 +45,7 @@ public class JDKInvocationHandler<T> extends AbstractInvocationHandler implement
         RpcRequest request = buildRequest(method, args);
         LOG.info("send rpc");
 
-//        ServiceInstance serviceInstance = serviceStrategy.getInstance(1000);
-//
-//        LOG.info("serviceInstance : {}", serviceInstance);
-//
-//        if (serviceInstance == null) {
-//            throw new ClientCoreException(new CoreErrorMsg(-1, 1001, "cantnot find service"));
-//        }
-//
-//        NettyClientHandler handler = serviceStrategy.getNettyClientHandler(
-//                serviceInstance.getServerAddr());
-//
-//        LOG.info("choose handler");
-
         return filterChain.invoke(request);
-
-//        RPCFuture rpcFuture = handler.sendRequest(request);
-
-//        return rpcFuture.get();
     }
 
 }

@@ -5,14 +5,12 @@ import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import net.bytebuddy.implementation.bind.annotation.This;
 import org.miaohong.fishrpc.core.annotation.Internal;
-import org.miaohong.fishrpc.core.execption.ClientCoreException;
-import org.miaohong.fishrpc.core.execption.CoreErrorMsg;
-import org.miaohong.fishrpc.core.rpc.client.RPCFuture;
+import org.miaohong.fishrpc.core.rpc.chain.ConsumerFilterChain;
+import org.miaohong.fishrpc.core.rpc.chain.FilterChain;
 import org.miaohong.fishrpc.core.rpc.client.proxy.AbstractInvocationHandler;
 import org.miaohong.fishrpc.core.rpc.client.strategy.ServiceStrategy;
-import org.miaohong.fishrpc.core.rpc.network.client.transport.NettyClientHandler;
+import org.miaohong.fishrpc.core.rpc.contex.RpcContex;
 import org.miaohong.fishrpc.core.rpc.proto.RpcRequest;
-import org.miaohong.fishrpc.core.rpc.register.serializer.ServiceInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +23,8 @@ public class BytebuddyInvocationHandler extends AbstractInvocationHandler {
     private static final Logger LOG = LoggerFactory.getLogger(BytebuddyInvocationHandler.class);
 
     private ServiceStrategy serviceStrategy;
+
+    private FilterChain filterChain = new ConsumerFilterChain();
 
     public BytebuddyInvocationHandler(ServiceStrategy serviceStrategy) {
         this.serviceStrategy = serviceStrategy;
@@ -53,22 +53,8 @@ public class BytebuddyInvocationHandler extends AbstractInvocationHandler {
         LOG.debug(method.getDeclaringClass().getName());
         LOG.debug(method.getName());
 
-        LOG.info("start choose handler");
+        RpcContex.init(request);
 
-        ServiceInstance serviceInstance = serviceStrategy.getInstance();
-
-        if (serviceInstance == null) {
-            throw new ClientCoreException(new CoreErrorMsg(-1, 1001, "cantnot find service"));
-        }
-
-        LOG.info("serviceInstance : {}", serviceInstance);
-        NettyClientHandler handler = serviceStrategy.getNettyClientHandler(
-                serviceInstance.getServerAddr());
-
-        LOG.info("choose handler {}", handler);
-
-        RPCFuture rpcFuture = handler.sendRequest(request);
-
-        return rpcFuture.get();
+        return filterChain.invoke(request);
     }
 }

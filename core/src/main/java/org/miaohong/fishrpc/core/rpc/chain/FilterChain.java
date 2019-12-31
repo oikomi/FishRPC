@@ -3,6 +3,7 @@ package org.miaohong.fishrpc.core.rpc.chain;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.miaohong.fishrpc.core.extension.ExtensionLoader;
+import org.miaohong.fishrpc.core.rpc.chain.filter.Filter;
 import org.miaohong.fishrpc.core.util.CommonUtils;
 
 import java.util.Collections;

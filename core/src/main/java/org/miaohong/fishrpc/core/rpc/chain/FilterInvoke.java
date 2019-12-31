@@ -2,6 +2,7 @@ package org.miaohong.fishrpc.core.rpc.chain;
 
 import lombok.ToString;
 import org.miaohong.fishrpc.core.execption.FrameworkException;
+import org.miaohong.fishrpc.core.rpc.chain.filter.Filter;
 import org.miaohong.fishrpc.core.rpc.proto.RpcRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

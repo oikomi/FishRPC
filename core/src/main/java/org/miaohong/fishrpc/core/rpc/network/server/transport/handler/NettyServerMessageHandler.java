@@ -12,7 +12,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.miaohong.fishrpc.core.conf.prop.CommonNettyPropConfig;
 import org.miaohong.fishrpc.core.execption.ServerCoreException;
-import org.miaohong.fishrpc.core.rpc.RpcContext;
 import org.miaohong.fishrpc.core.rpc.RpcHandler;
 import org.miaohong.fishrpc.core.rpc.channel.NettyChannel;
 import org.miaohong.fishrpc.core.rpc.eventbus.event.ServiceRegistedEvent;
@@ -147,10 +146,10 @@ public class NettyServerMessageHandler extends SimpleChannelInboundHandler<RpcRe
     }
 
     private Object handle(final RpcRequest request) {
-        RpcContext.init(request);
         String interfaceId = request.getInterfaceId();
         Object serviceBean = SERVICE_MAP.get(interfaceId);
         if (serviceBean == null) {
+            LOG.error("serviceBean is null, interfaceId is {}", interfaceId);
             throw new ServerCoreException("serviceBean is null");
         }
         LOG.info("serviceBean: {}", serviceBean);

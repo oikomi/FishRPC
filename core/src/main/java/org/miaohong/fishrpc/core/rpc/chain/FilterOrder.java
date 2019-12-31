@@ -2,7 +2,7 @@ package org.miaohong.fishrpc.core.rpc.chain;
 
 public enum FilterOrder {
 
-    MESSAGE(1001), TRACE(2001), SSL(3001);
+    MESSAGE(1001), LB(2001), TRACE(3001);
 
     private int order;
 
@@ -14,4 +14,8 @@ public enum FilterOrder {
         return order;
     }
 
+
+    public boolean isEnd() {
+        return this == MESSAGE;
+    }
 }

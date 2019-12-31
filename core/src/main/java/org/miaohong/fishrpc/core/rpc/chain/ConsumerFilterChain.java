@@ -1,6 +1,7 @@
 package org.miaohong.fishrpc.core.rpc.chain;
 
 import org.miaohong.fishrpc.core.execption.FrameworkException;
+import org.miaohong.fishrpc.core.rpc.chain.filter.Filter;
 import org.miaohong.fishrpc.core.rpc.proto.RpcRequest;
 import org.miaohong.fishrpc.core.util.CommonUtils;
 import org.slf4j.Logger;
