@@ -31,10 +31,6 @@ public class RpcContext {
     @Setter
     private RpcResponse response;
 
-    @Getter
-    @Setter
-    private String clientRequestId = null;
-
     public static RpcContext getContext() {
         return LOCAL_CONTEXT.get();
     }
@@ -43,7 +39,6 @@ public class RpcContext {
         RpcContext context = new RpcContext();
         if (request != null) {
             context.setRequest(request);
-//            context.setClientRequestId(request.getAttachments().get(URLParamType.requestIdFromClient.getName()));
         }
         LOCAL_CONTEXT.set(context);
 

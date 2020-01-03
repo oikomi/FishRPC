@@ -46,8 +46,8 @@ public class RandomStrategy extends AbstractServiceStrategy implements ServiceSt
 
     @Override
     public NettyClientHandler getNettyClientHandler(String serverAddr) {
-        LOG.info("nettyClientHandlers : {}", nettyClientHandlers);
-        return nettyClientHandlers.get(serverAddr);
+        LOG.info("NETTY_CLIENT_HANDLER_CONCURRENT_MAP : {}", NETTY_CLIENT_HANDLER_CONCURRENT_MAP);
+        return NETTY_CLIENT_HANDLER_CONCURRENT_MAP.get(serverAddr);
     }
 
 }

@@ -12,10 +12,8 @@ import java.util.concurrent.ConcurrentMap;
 
 public abstract class AbstractServiceStrategy implements ServiceStrategy {
 
+    protected static final ConcurrentMap<String, NettyClientHandler> NETTY_CLIENT_HANDLER_CONCURRENT_MAP = Maps.newConcurrentMap();
     private static final Logger LOG = LoggerFactory.getLogger(AbstractServiceStrategy.class);
-
-    protected static ConcurrentMap<String, NettyClientHandler> nettyClientHandlers = Maps.newConcurrentMap();
-
     protected InstanceProvider instanceProvider = ServiceCacheListenerImpl.get();
 
     public AbstractServiceStrategy() {
@@ -28,8 +26,8 @@ public abstract class AbstractServiceStrategy implements ServiceStrategy {
             LOG.info("Received event [{}] and will take a action", event);
             if (event instanceof NettyClientHandlerRegistedEvent) {
                 NettyClientHandlerRegistedEvent rpcClientRegistedEvent = (NettyClientHandlerRegistedEvent) event;
-                nettyClientHandlers.put(rpcClientRegistedEvent.getServerAddr(), rpcClientRegistedEvent.getNettyClientHandler());
-                LOG.info("nettyClientHandlers {} ", nettyClientHandlers);
+                NETTY_CLIENT_HANDLER_CONCURRENT_MAP.put(rpcClientRegistedEvent.getServerAddr(), rpcClientRegistedEvent.getNettyClientHandler());
+                LOG.info("NETTY_CLIENT_HANDLER_CONCURRENT_MAP {} ", NETTY_CLIENT_HANDLER_CONCURRENT_MAP);
             }
         }
     }

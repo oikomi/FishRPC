@@ -31,17 +31,8 @@ public class BytebuddyInvocationHandler extends AbstractInvocationHandler {
             throws ExecutionException, InterruptedException {
 
         if (isLocalMethod(method)) {
-            String name = method.getName();
-            if ("equals".equals(name)) {
-                return proxy == args[0];
-            } else if ("hashCode".equals(name)) {
-                return System.identityHashCode(proxy);
-            } else if ("toString".equals(name)) {
-                return proxy.getClass().getName() + "@" +
-                        Integer.toHexString(System.identityHashCode(proxy)) +
-                        ", with InvocationHandler " + this;
-            } else {
-                throw new IllegalStateException(String.valueOf(method));
+            if (isLocalMethod(method)) {
+                return checkMethod(proxy, method, args);
             }
         }
 
