@@ -3,7 +3,6 @@ package org.miaohong.fishrpc.core.rpc.chain.filter;
 import lombok.ToString;
 import org.miaohong.fishrpc.core.annotation.SpiMeta;
 import org.miaohong.fishrpc.core.execption.ClientCoreException;
-import org.miaohong.fishrpc.core.execption.CoreErrorMsg;
 import org.miaohong.fishrpc.core.extension.ExtensionLoader;
 import org.miaohong.fishrpc.core.rpc.chain.FilterInvoke;
 import org.miaohong.fishrpc.core.rpc.chain.FilterOrder;
@@ -16,6 +15,8 @@ import org.miaohong.fishrpc.core.rpc.proto.RpcRequest;
 import org.miaohong.fishrpc.core.rpc.register.serializer.ServiceInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.miaohong.fishrpc.core.execption.CoreErrorConstant.CLIENT_DEFAULT_ERROR;
 
 @SpiMeta(name = "lb")
 @ToString
@@ -33,18 +34,14 @@ public class ConsumerLbFilter extends AbstractFilter {
 
     @Override
     protected void processBusiness(FilterInvoke invoke, RpcRequest request) {
-
         ServiceInstance serviceInstance = serviceStrategy.getInstance(1000);
-
         LOG.info("serviceInstance : {}", serviceInstance);
-
         if (serviceInstance == null) {
-            throw new ClientCoreException(new CoreErrorMsg(-1, 1001, "cantnot find service"));
+            throw new ClientCoreException("can not find service", CLIENT_DEFAULT_ERROR);
         }
 
         RpcContext context = RpcContext.getContext();
         context.getAttributes().put(AttributesConstants.SERVICE_ATTR, serviceInstance);
-
     }
 
 }

@@ -103,6 +103,7 @@ public class ServiceCacheListenerImpl implements ServiceCacheListener, InstanceP
             try {
                 boolean available = waitingForHandler(timeout);
                 if (available) {
+                    LOG.info("wait available");
                     size = instances.size();
                 }
             } catch (InterruptedException e) {

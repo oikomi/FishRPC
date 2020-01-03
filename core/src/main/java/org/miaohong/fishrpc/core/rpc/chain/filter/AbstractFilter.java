@@ -40,23 +40,25 @@ public abstract class AbstractFilter implements Filter {
         return invoke.invoke(request);
     }
 
+    @NotNull
     @Override
     public FilterType getFilterType() {
         return filterType;
     }
 
     @Override
-    public void setFilterType(FilterType filterType) {
+    public void setFilterType(@NotNull FilterType filterType) {
         this.filterType = filterType;
     }
 
+    @NotNull
     @Override
     public FilterOrder getFilterOrder() {
         return filterOrder;
     }
 
     @Override
-    public void setFilterOrder(FilterOrder filterOrder) {
+    public void setFilterOrder(@NotNull FilterOrder filterOrder) {
         this.filterOrder = filterOrder;
     }
 

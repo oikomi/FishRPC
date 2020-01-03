@@ -77,17 +77,25 @@ public class ZookeeperRegistry extends AbstractRegister implements UnhandledErro
                 (client, newState) -> handleConnectionStateChange(newState));
     }
 
+    private void recoverRegistryData() {
+        LOG.info("do recover registry data");
+        for (ServiceConfig serviceConfig : SERVICE_CONFIG_LIST) {
+            doRegister(serviceConfig);
+        }
+    }
+
     private void handleConnectionStateChange(ConnectionState newState) {
         switch (newState) {
             case CONNECTED:
                 LOG.info("Connected to ZooKeeper quorum.");
+                recoverRegistryData();
                 break;
             case SUSPENDED:
                 LOG.info("Connection to ZooKeeper suspended.");
                 break;
             case RECONNECTED:
                 LOG.info("Connection to ZooKeeper was reconnected.");
-                //// recoverRegistryData();
+                recoverRegistryData();
                 break;
             case LOST:
                 // Maybe we have to throw an exception here to terminate
@@ -128,9 +136,14 @@ public class ZookeeperRegistry extends AbstractRegister implements UnhandledErro
         return rootPath + config.getInterfaceId() + "/services";
     }
 
-
     @Override
     public void register(final ServiceConfig serviceConfig) {
+        SERVICE_CONFIG_LIST.add(serviceConfig);
+        doRegister(serviceConfig);
+    }
+
+
+    private void doRegister(final ServiceConfig serviceConfig) {
         LOG.info("do register");
         NetworkConfig serverConfig = serviceConfig.getServerConfig();
         StringBuilder sb = new StringBuilder();
@@ -144,7 +157,6 @@ public class ZookeeperRegistry extends AbstractRegister implements UnhandledErro
                     .forPath(serverUrl, serializer.serialize(
                             ServiceInstance.<ServerConfig>builder(serviceConfig).build()));
 
-            SERVICE_CONFIG_LIST.add(serviceConfig);
             LOG.info("start send event");
             serviceConfig.getEventBus().post(new ServiceRegistedEvent(EventAction.ADD,
                     serviceConfig.getInterfaceId(), serviceConfig.getRef()));
@@ -154,7 +166,7 @@ public class ZookeeperRegistry extends AbstractRegister implements UnhandledErro
                     serviceConfig.getInterfaceId(), serviceConfig.getRef()));
             LOG.warn("service has exists in zookeeper, service={}", serverUrl);
         } catch (Exception e) {
-            LOG.error(e.getMessage(), e);
+            LOG.error("register failed {}", e.getMessage(), e);
             throw new FrameworkException(e.getMessage());
         }
     }
